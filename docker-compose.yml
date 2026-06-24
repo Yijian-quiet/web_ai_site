@@ -23,7 +23,7 @@ services:
 
   streamlit:
     build:
-      context: /root/web_ai/yijian_AI
+      context: /root/web_ai/personality_AI
       dockerfile: Dockerfile
     container_name: web_ai_streamlit
     restart: always
@@ -31,7 +31,7 @@ services:
       mysql:
         condition: service_healthy
     env_file:
-      - /root/web_ai/yijian_AI/.env
+      - /root/web_ai/personality_AI/.env
     environment:
       - MYSQL_HOST=mysql
     ports:
@@ -47,7 +47,7 @@ services:
       mysql:
         condition: service_healthy
     env_file:
-      - /root/web_ai/yijian_AI/.env
+      - /root/web_ai/personality_AI/.env
     environment:
       - MYSQL_HOST=mysql
     ports:

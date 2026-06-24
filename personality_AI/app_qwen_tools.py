@@ -4,7 +4,6 @@ import uuid
 from datetime import datetime
 from models.user import verify_user, register_user
 from models.chat import *
-from services.retro import show_retro_interface  
 from services.qwen_service import get_qwen_response, get_qwen_response_stream
 
 st.set_page_config(page_title="不颓废的小健-自由基的AI分身", page_icon="🤖", layout="wide")
@@ -235,7 +234,7 @@ def show_chat():
 # ========================
 PAGE_REGISTRY = {
     "chat": show_chat,
-    "retro": show_retro_interface,
+    
     # 未来新增页面只需在这里注册，例如：
     # "property": show_property_prediction,
     # "forward": show_forward_synthesis,
@@ -244,7 +243,7 @@ PAGE_REGISTRY = {
 # 页面显示名称（用于侧边栏）
 PAGE_LABELS = {
     "chat": "💬 聊天",
-    "retro": "🧪 Retro* 逆合成规划",
+    
     # "property": "📊 分子性质预测",
     # "forward": "➡️ 正向合成",
 }

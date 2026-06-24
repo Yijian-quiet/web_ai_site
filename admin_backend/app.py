@@ -2,7 +2,7 @@
 
 import sys, os
 import os
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "yijian_AI"))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "personality_AI"))
 
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify
 import pymysql
@@ -360,7 +360,7 @@ def mobile_new_session_api():
 
 # ====== 邮箱验证 & 密码重置 ======
 import os, sys
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'yijian_AI'))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'personality_AI'))
 from models.user import verify_email_token, reset_password, send_password_reset
 from datetime import datetime
 

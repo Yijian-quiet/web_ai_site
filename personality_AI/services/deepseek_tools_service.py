@@ -8,10 +8,8 @@ load_dotenv()
 client = OpenAI(api_key=os.getenv("DEEPSEEK_API_KEY"), base_url="https://api.deepseek.com/v1")
 
 # ===== 工具定义 =====
-RETRO_TOOL = {
     "type": "function",
     "function": {
-        "name": "retrosynthesis_plan",
         "description": "对目标分子进行逆合成路径规划，输入SMILES返回合成路线",
         "parameters": {
             "type": "object",
@@ -23,12 +21,9 @@ RETRO_TOOL = {
     }
 }
 
-RETRO_API = "http://docker-gateway:5050"
 
-def execute_retrosynthesis(smiles):
     """执行逆合成规划"""
     try:
-        resp = requests.post(f"{RETRO_API}/retro/api/plan", json={"smiles": smiles}, timeout=30)
         if resp.ok:
             data = resp.json()
             routes = data.get("routes", [])
@@ -49,7 +44,6 @@ def execute_retrosynthesis(smiles):
 
 def get_response_with_tools(messages, model="deepseek-chat"):
     """带 function calling 的对话"""
-    tools = [RETRO_TOOL]
     
     while True:
         resp = client.chat.completions.create(
@@ -60,9 +54,7 @@ def get_response_with_tools(messages, model="deepseek-chat"):
         if msg.tool_calls:
             messages.append(msg)
             for tc in msg.tool_calls:
-                if tc.function.name == "retrosynthesis_plan":
                     args = json.loads(tc.function.arguments)
-                    result = execute_retrosynthesis(args.get("smiles", ""))
                     messages.append({
                         "role": "tool",
                         "tool_call_id": tc.id,
@@ -74,7 +66,6 @@ def get_response_with_tools(messages, model="deepseek-chat"):
 
 def get_response_stream(messages, model="deepseek-chat"):
     """流式响应 + function calling"""
-    tools = [RETRO_TOOL]
     
     # 第一次调用
     resp = client.chat.completions.create(
@@ -112,9 +103,7 @@ def get_response_stream(messages, model="deepseek-chat"):
         ]})
         
         for tc in tool_calls.values():
-            if tc["name"] == "retrosynthesis_plan":
                 args = json.loads(tc["args"])
-                result = execute_retrosynthesis(args.get("smiles", ""))
                 messages.append({"role": "tool", "tool_call_id": tc["id"], "content": result})
                 messages.append({"role": "system", "content": "请始终使用 SMILES 格式（如 CC(=O)O）表示分子，不要使用传统化学式。在回复中保留 SMILES 以便分子结构渲染"})
         
@@ -125,7 +114,6 @@ def get_response_stream(messages, model="deepseek-chat"):
         # 渲染分子图
         if tool_calls and len(tool_calls) > 0:
             for _tc in tool_calls.values():
-                if _tc["name"] == "retrosynthesis_plan":
                     import requests as _rq
                     _args = json.loads(_tc["args"])
                     _smi = _args.get("smiles", "")

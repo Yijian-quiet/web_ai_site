@@ -5,7 +5,6 @@ from datetime import datetime
 from models.user import verify_user, register_user_with_email, get_admin_status
 from models.admin import check_rate_limit
 from models.chat import *
-from services.retro import show_retro_interface  
 from services.admin_ui import show_admin_dashboard
 from services.deepseek_tools_service import get_response_stream
 from services.blog_rag_service import get_blog_context, refresh as refresh_rag
@@ -234,8 +233,7 @@ def show_chat():
 
 
 # ======================== 页面注册表 ========================
-PAGE_REGISTRY = {"chat": show_chat, "retro": show_retro_interface, "admin": show_admin_dashboard}
-PAGE_LABELS = {"chat": "💬 聊天", "retro": "🧪 Retro* 逆合成规划", "admin": "⚙️ 管理后台"}
+PAGE_LABELS = {"chat": "💬 聊天", "admin": "⚙️ 管理后台"}
 
 
 # ======================== 主逻辑 ========================

@@ -22,11 +22,9 @@
 | 2026-06-16 | 注册异常处理 | SMTP 发信失败不崩页面 |
 | 2026-06-16 | AI 人格设定 | 添加 system prompt 设定为不颓废的小健 |
 | 2026-06-16 | 逆合成引擎修复 | 修复 UnboundLocalError(json) |
-| 2026-06-16 | 新增 mol_svg API 端点 | /retro/api/mol_svg 返回 image/svg+xml |
 | 2026-06-16 | 分子图内联渲染 | SMILES 高亮 + 80px SVG 缩略图，悬停显示 |
 | 2026-06-17 | Git 管理 | commit + push 到 GitHub redesign-v2 分支 |
 | 2026-06-17 | docs/ 清理 | 删除 superpowers 生成的旧规划文件，保留 context/ |
-| 2026-06-17 | 新增 mol_png 端点 | /retro/api/mol_png 返回 PNG，解决 Streamlit 过滤 SVG 问题 |
 | 2026-06-17 | 分子图 PNG 内联渲染 | 改为 PNG data URL，SMILES 紫色高亮+缩略图稳定显示 |
 
 ## 🟡 进行中
