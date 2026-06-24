@@ -84,8 +84,8 @@ def plan(target, matcher, bb_set, max_depth=3, topk=3):
 
 if __name__ == "__main__":
     print("初始化模板匹配器...")
-    matcher = Matcher("/var/www/web_ai/retro_service/templates/pistachio_5000.json")
-    bb_set = set(json.load(open("/var/www/web_ai/retro_service/basic_mol.json"))) if os.path.exists("/var/www/web_ai/retro_service/basic_mol.json") else set()
+    matcher = Matcher("/root/web_ai/retro_service/templates/pistachio_5000.json")
+    bb_set = set(json.load(open("/root/web_ai/retro_service/basic_mol.json"))) if os.path.exists("/root/web_ai/retro_service/basic_mol.json") else set()
     print(f"  建筑分子: {len(bb_set)}")
     
     t = "CC(=O)Oc1ccccc1C(=O)O"

@@ -11,7 +11,7 @@ MYSQL_CONFIG = {
     "host": os.getenv("MYSQL_HOST", "localhost"),
     "port": int(os.getenv("MYSQL_PORT", 3306)),
     "user": "webai",
-    "password": os.getenv("MYSQL_PASSWORD", "your-password"),
+    "password": os.getenv("MYSQL_PASSWORD", "test123"),
     "database": "web_ai",
     "charset": "utf8mb4",
 }

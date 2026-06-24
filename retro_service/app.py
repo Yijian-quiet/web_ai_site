@@ -11,7 +11,7 @@ app = Flask(__name__)
 
 # 加载模板匹配器
 from template_matcher_v2 import Matcher as TMatcher, plan as do_plan
-MATCHER = TMatcher('/var/www/web_ai/retro_service/templates/pistachio_5000.json')
+MATCHER = TMatcher('/root/web_ai/retro_service/templates/pistachio_5000.json')
 
 # 加载建筑分子集
 BASIC_MOL_PATH = os.path.join(os.path.dirname(__file__), "basic_mol.json")

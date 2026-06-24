@@ -32,7 +32,7 @@
 
 ## 项目结构
 ```
-/var/www/web_ai/
+/root/web_ai/
 ├── docker-compose.yml          # 编排文件
 ├── yijian_AI/                  # Streamlit 聊天站
 │   ├── app_qwen.py

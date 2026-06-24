@@ -15,7 +15,7 @@ JSON 数据文件已挂载为 Docker 卷，修改后需要重启 Flask 容器：
 
 ```bash
 # 编辑 JSON 数据
-nano /var/www/web_ai/admin_backend/data/projects.json
+nano /root/web_ai/admin_backend/data/projects.json
 # 修改完成后重启容器
 docker restart web_ai_flask
 ```
@@ -32,7 +32,7 @@ docker restart web_ai_flask
 
 ```bash
 # 重建并重启
-cd /var/www/web_ai
+cd /root/web_ai
 docker compose up -d --force-recreate <服务名>
 ```
 
