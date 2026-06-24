@@ -224,7 +224,7 @@ def tools():
 
 @app.route("/chat")
 def chat_redirect():
-    return redirect("http://119.45.174.234")
+    return redirect("http://your-domain.com")
 
 
 # ====== 公开博客 ======

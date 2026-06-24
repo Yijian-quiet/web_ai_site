@@ -172,7 +172,7 @@ def register_user_with_email(username, password, email):
                 (user_id, email, token, expires)
             )
             conn.commit()
-            verify_url = f"http://119.45.174.234/verify/{token}"
+            verify_url = f"http://your-domain.com/verify/{token}"
             send_verify_email(email, username, verify_url)
             return True, "注册成功！请检查邮箱完成验证。"
         except Exception:
@@ -199,7 +199,7 @@ def send_password_reset(email):
         )
         conn.commit()
 
-        reset_url = f"http://119.45.174.234/reset-password?token={token}"
+        reset_url = f"http://your-domain.com/reset-password?token={token}"
         send_reset_email(email, user["username"], reset_url)
         return True, "重置密码链接已发送到你的邮箱"
     finally:

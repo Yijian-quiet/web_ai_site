@@ -3,10 +3,10 @@
 张一健（Mr.自由基）的个人 AI 网站，集成博客、AI 聊天助手、后台管理。
 
 ## 访问地址
-- 🌐 网站：http://119.45.174.234
-- 📝 博客：http://119.45.174.234/blog
-- 🤖 AI 助手：http://119.45.174.234/
-- ⚙️ 管理后台：http://119.45.174.234/admin/
+- 🌐 网站：https://your-domain.com
+- 📝 博客：https://your-domain.com/blog
+- 🤖 AI 助手：https://your-domain.com/
+- ⚙️ 管理后台：https://your-domain.com/admin/
 
 ## 技术栈
 | 组件 | 技术 |

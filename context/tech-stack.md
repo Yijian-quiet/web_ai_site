@@ -5,7 +5,7 @@
 ## 基础设施
 | 组件 | 技术选型 | 版本 | 说明 |
 |------|---------|------|------|
-| 云服务器 | 腾讯云 CVM | 2C4G 20GB | 119.45.174.234 |
+| 云服务器 | 腾讯云 CVM | 2C4G 20GB | your-domain.com |
 | 操作系统 | TencentOS Server | 3.1 | 基于 CentOS |
 | 容器引擎 | Docker CE | 28.0.1 | Compose v2.32.1 |
 
@@ -28,11 +28,11 @@
 | 配置 | 值 |
 |:----|:---|
 | SMTP | smtp.qq.com:465 (SSL) |
-| 邮箱 | zhangyijian1023@qq.com |
+| 邮箱 | your-email@example.com |
 
 ## 项目结构
 ```
-/root/web_ai/
+/var/www/web_ai/
 ├── docker-compose.yml          # 编排文件
 ├── yijian_AI/                  # Streamlit 聊天站
 │   ├── app_qwen.py

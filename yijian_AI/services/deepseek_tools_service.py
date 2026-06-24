@@ -23,7 +23,7 @@ RETRO_TOOL = {
     }
 }
 
-RETRO_API = "http://172.17.0.1:5050"
+RETRO_API = "http://docker-gateway:5050"
 
 def execute_retrosynthesis(smiles):
     """执行逆合成规划"""
@@ -130,7 +130,7 @@ def get_response_stream(messages, model="deepseek-chat"):
                     _args = json.loads(_tc["args"])
                     _smi = _args.get("smiles", "")
                     if _smi:
-                        _svg_resp = _rq.post("http://172.17.0.1:5050/retro/api/render_svg", json={"smiles": _smi}, timeout=10)
+                        _svg_resp = _rq.post("http://docker-gateway:5050/retro/api/render_svg", json={"smiles": _smi}, timeout=10)
                         if _svg_resp.ok:
                             _svg = _svg_resp.json().get("svg", "")
                             if _svg:

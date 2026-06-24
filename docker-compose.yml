@@ -12,7 +12,7 @@ services:
       MYSQL_PASSWORD: "***"
     volumes:
       - mysql_data:/var/lib/mysql
-      - /root/web_ai_docker.sql:/docker-entrypoint-initdb.d/01-init.sql:ro
+      - /var/www/web_ai_docker.sql:/docker-entrypoint-initdb.d/01-init.sql:ro
     ports:
       - "127.0.0.1:3307:3306"
     healthcheck:
@@ -23,7 +23,7 @@ services:
 
   streamlit:
     build:
-      context: /root/web_ai/yijian_AI
+      context: /var/www/web_ai/yijian_AI
       dockerfile: Dockerfile
     container_name: web_ai_streamlit
     restart: always
@@ -31,7 +31,7 @@ services:
       mysql:
         condition: service_healthy
     env_file:
-      - /root/web_ai/yijian_AI/.env
+      - /var/www/web_ai/yijian_AI/.env
     environment:
       - MYSQL_HOST=mysql
     ports:
@@ -39,7 +39,7 @@ services:
 
   flask-admin:
     build:
-      context: /root/web_ai/admin_backend
+      context: /var/www/web_ai/admin_backend
       dockerfile: Dockerfile
     container_name: web_ai_flask
     restart: always
@@ -47,13 +47,13 @@ services:
       mysql:
         condition: service_healthy
     env_file:
-      - /root/web_ai/yijian_AI/.env
+      - /var/www/web_ai/yijian_AI/.env
     environment:
       - MYSQL_HOST=mysql
     ports:
       - "127.0.0.1:5000:5000"
     volumes:
-      - /root/web_ai/admin_backend/data:/app/data
+      - /var/www/web_ai/admin_backend/data:/app/data
 
 volumes:
   mysql_data:

@@ -3,7 +3,7 @@ import streamlit as st
 import requests
 import json
 
-API = "http://172.17.0.1:5050"
+API = "http://docker-gateway:5050"
 
 def get_svg(smiles):
     try:
