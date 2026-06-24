@@ -2,7 +2,8 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
-RUN pip install waitress markdown --no-cache-dir flask pymysql bcrypt python-dotenv fastembed onnxruntime
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 ENV HF_ENDPOINT=https://hf-mirror.com
