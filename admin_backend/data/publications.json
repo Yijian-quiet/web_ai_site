@@ -1,0 +1,65 @@
+[
+  {
+    "id": "jctc-retrozero",
+    "title": "Retrosynthesis Zero: Self-Improving Global Synthesis Planning Using Reinforcement Learning",
+    "type": "paper",
+    "authors": ["张一健", "…"],
+    "venue": "Journal of Chemical Theory and Computation (JCTC)",
+    "year": 2024,
+    "volume": "20",
+    "issue": "11",
+    "pages": "4921-4938",
+    "status": "published",
+    "description": "从AlphaGo中获得灵感，采用MCTS结合神经网络预测反应的方法，实现自我改进的多步逆合成规划。",
+    "tags": ["逆合成", "强化学习", "MCTS"],
+    "links": {
+      "doi": "https://doi.org/10.1021/acs.jctc.4c00071"
+    }
+  },
+  {
+    "id": "cape-protein",
+    "title": "Critical Assessment of Protein Engineering (CAPE): A Student Challenge on the Cloud",
+    "type": "paper",
+    "authors": ["张一健", "…"],
+    "venue": "ACS Synthetic Biology",
+    "year": 2024,
+    "volume": "13",
+    "issue": "11",
+    "pages": "3782-3787",
+    "status": "published",
+    "description": "蛋白质设计竞赛金奖项目。粗粒化编码氨基酸+GAN生成对抗网络快速虚拟筛选RhlA酶突变体。",
+    "tags": ["蛋白质设计", "GAN", "合成生物学"],
+    "links": {
+      "doi": "https://doi.org/10.1021/acssynbio.4c00588"
+    }
+  },
+  {
+    "id": "aqueous-chem",
+    "title": "Accurate modeling of aqueous chemistry at the nano-/microscale",
+    "type": "paper",
+    "authors": ["张一健", "…"],
+    "venue": "SCIENTIA SINICA Chimica (中国科学:化学)",
+    "year": 2024,
+    "volume": "54",
+    "issue": "1",
+    "pages": "93-111",
+    "status": "published",
+    "description": "纳米/微尺度水化学的精确建模研究。",
+    "tags": ["水化学", "计算化学"],
+    "links": {
+      "doi": "https://doi.org/10.1360/ssc-2023-0205"
+    }
+  },
+  {
+    "id": "multimodal-project",
+    "title": "多模态化学逆合成模型",
+    "type": "project",
+    "authors": ["张一健"],
+    "venue": "2025江苏省研究生创新项目",
+    "year": 2025,
+    "status": "in_progress",
+    "description": "唯一负责人。改造LLaVA多模态模型视觉编码器适配分子光谱，实现光谱→分子识别，融合文本与结构信息。",
+    "tags": ["多模态", "逆合成", "光谱"],
+    "links": {}
+  }
+]

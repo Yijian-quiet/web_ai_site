@@ -1,0 +1,29 @@
+{% extends "base_public.html" %}
+{% block title %}Mr.自由基 - AI4S{% endblock %}
+{% block content %}
+<section class="hero">
+    <div class="hero-content">
+        <div class="hero-badge anim-fade"><i class="bi bi-robot"></i> AI for Science · 化学信息学</div>
+        <h1 class="anim-fade-d1">
+            <span class="gradient-text">{{ profile.name }}</span>
+        </h1>
+        <p class="subtitle anim-fade-d2">{{ profile.subtitle }}</p>
+        <p class="bio anim-fade-d2">{{ profile.bio }}</p>
+        <div class="hero-actions anim-fade-d3">
+            <a href="/about" class="btn btn-primary"><i class="bi bi-person"></i> 了解更多</a>
+            <a href="/projects" class="btn btn-secondary"><i class="bi bi-journal-code"></i> 科研项目</a>
+            <a href="/chat" class="btn btn-secondary"><i class="bi bi-chat-dots"></i> AI 对话</a>
+        </div>
+
+        <div class="highlights anim-fade-d3">
+            {% for h in profile.highlights %}
+            <div class="highlight-item">
+                <i class="bi {{ h.icon }}"></i>
+                <div class="value">{{ h.value }}</div>
+                <div class="label">{{ h.label }}</div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

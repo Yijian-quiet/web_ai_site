@@ -1,0 +1,39 @@
+{% extends "base_public.html" %}
+{% block title %}{{ post.title }}{% endblock %}
+{% block extra_head %}
+<style>
+.article { max-width: 750px; margin: 0 auto; padding: 0 24px 60px; }
+.article h1 { font-size: 2rem; font-weight: 700; margin-bottom: 8px; line-height: 1.3; }
+.article-meta { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 32px; padding-bottom: 16px; border-bottom: 1px solid var(--border-subtle); }
+.article h2 { font-size: 1.4rem; font-weight: 600; margin: 2rem 0 0.8rem; padding-bottom: 0.3rem; border-bottom: 1px solid var(--border-subtle); }
+.article h3 { font-size: 1.15rem; font-weight: 600; margin: 1.5rem 0 0.6rem; }
+.article p { line-height: 1.85; margin-bottom: 1rem; color: var(--text-secondary); }
+.article img { max-width: 100%; border-radius: 8px; margin: 1.2rem auto; display: block; }
+.article blockquote { border-left: 3px solid var(--accent); padding: 0.8rem 1.2rem; margin: 1.2rem 0; background: var(--bg-glass); border-radius: 0 8px 8px 0; }
+.article blockquote p { margin-bottom: 0.3rem; }
+.article ul, .article ol { line-height: 1.85; margin-bottom: 1rem; padding-left: 1.5rem; color: var(--text-secondary); }
+.article li { margin-bottom: 0.3rem; }
+.article hr { margin: 2rem 0; border-color: var(--border-subtle); }
+.article code { font-family: 'JetBrains Mono', monospace; background: var(--bg-glass); padding: 2px 6px; border-radius: 4px; font-size: 0.9em; }
+@media (max-width:768px) {
+  .article h1 { font-size: 1.5rem; }
+  .article { padding: 0 16px 40px; }
+}
+</style>
+{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="page-header" style="padding-bottom:24px;">
+        <a href="/blog" style="color:var(--accent);text-decoration:none;font-size:0.9rem;">← 返回博客</a>
+    </div>
+    <article class="article anim-fade">
+        <h1>{{ post.title }}</h1>
+        <div class="article-meta">
+            <i class="bi bi-calendar"></i> {{ post.created_at.strftime("%Y-%m-%d") }}
+            {% if post.tags %} · <i class="bi bi-tag"></i> {{ post.tags }}{% endif %}
+            · <i class="bi bi-eye"></i> {{ post.view_count + 1 }}
+        </div>
+        <div>{{ post.content | safe }}</div>
+    </article>
+</div>
+{% endblock %}

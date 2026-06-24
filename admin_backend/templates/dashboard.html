@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% block title %}总览{% endblock %}
+{% block content %}
+<h4 class="mb-4"><i class="bi bi-speedometer2"></i> 总览面板</h4>
+
+<!-- 统计卡片 -->
+<div class="row g-3 mb-4">
+    <div class="col">
+        <div class="card stat-card">
+            <div class="card-body">
+                <h2 class="mb-0 fw-bold">{{ user_count }}</h2>
+                <div class="text-secondary small">总用户数</div>
+                <i class="icon bi bi-people"></i>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card stat-card">
+            <div class="card-body">
+                <h2 class="mb-0 fw-bold">{{ msg_count }}</h2>
+                <div class="text-secondary small">总消息数</div>
+                <i class="icon bi bi-chat"></i>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card stat-card">
+            <div class="card-body">
+                <h2 class="mb-0 fw-bold">{{ session_count }}</h2>
+                <div class="text-secondary small">总会话数</div>
+                <i class="icon bi bi-folder"></i>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card stat-card">
+            <div class="card-body">
+                <h2 class="mb-0 fw-bold">{{ today_msg }}</h2>
+                <div class="text-secondary small">今日消息</div>
+                <i class="icon bi bi-graph-up-arrow"></i>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card stat-card">
+            <div class="card-body">
+                <h2 class="mb-0 fw-bold">{{ today_users }}</h2>
+                <div class="text-secondary small">今日活跃</div>
+                <i class="icon bi bi-person-check"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 趋势图 -->
+<div class="card stat-card mb-4">
+    <div class="card-body">
+        <h6><i class="bi bi-bar-chart-line"></i> 近7天消息趋势</h6>
+        <div style="height:200px;display:flex;align-items:end;gap:12px;padding:20px 0;">
+            {% for t in trend %}
+            <div style="flex:1;text-align:center;">
+                <div class="small text-secondary mb-1">{{ t.count }}</div>
+                <div style="height:{{ (t.count / trend|map(attribute='count')|max * 150) if trend else 20 }}px;background:#6C63FF;border-radius:6px 6px 0 0;min-height:10px;"></div>
+                <div class="small text-secondary mt-1">{{ t.day }}</div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<!-- 最近评分 -->
+<div class="card stat-card">
+    <div class="card-body">
+        <h6><i class="bi bi-star"></i> 最近评分</h6>
+        {% if recent_ratings %}
+        <table class="table table-sm">
+            <thead><tr><th>用户</th><th>评分</th><th>内容</th><th>时间</th></tr></thead>
+            <tbody>
+            {% for r in recent_ratings %}
+            <tr>
+                <td>{{ r.username }}</td>
+                <td>{{ {1:"👎",2:"👌",3:"👍"}.get(r.rating, "❓") }}</td>
+                <td class="small text-truncate" style="max-width:300px;">{{ r.content[:60] }}{% if r.content|length > 60 %}...{% endif %}</td>
+                <td class="small text-secondary">{{ r.timestamp }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p class="text-secondary small mb-0">暂无评分</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

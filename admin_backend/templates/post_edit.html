@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}{% if post %}编辑文章{% else %}写文章{% endif %}{% endblock %}
+{% block content %}
+<h4 class="mb-4"><i class="bi bi-pencil"></i> {% if post %}编辑文章{% else %}写文章{% endif %}</h4>
+<div class="card stat-card">
+    <div class="card-body">
+        <form method="post">
+            <div class="mb-3">
+                <label class="form-label small">标题</label>
+                <input type="text" name="title" class="form-control" value="{{ post.title if post else '' }}" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label small">摘要</label>
+                <textarea name="summary" class="form-control" rows="2">{{ post.summary if post else '' }}</textarea>
+            </div>
+            <div class="mb-3">
+                <label class="form-label small">内容（Markdown）</label>
+                <textarea name="content" class="form-control" rows="15" style="font-family:monospace;">{{ post.content if post else '' }}</textarea>
+            </div>
+            <div class="row mb-3">
+                <div class="col">
+                    <label class="form-label small">标签（逗号分隔）</label>
+                    <input type="text" name="tags" class="form-control" value="{{ post.tags if post else '' }}">
+                </div>
+                <div class="col">
+                    <label class="form-label small">状态</label>
+                    <select name="status" class="form-select">
+                        <option value="draft" {% if post and post.status == 'draft' %}selected{% endif %}>草稿</option>
+                        <option value="published" {% if post and post.status == 'published' %}selected{% endif %}>发布</option>
+                    </select>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-dark"><i class="bi bi-check"></i> 保存</button>
+            <a href="/admin/posts" class="btn btn-outline-secondary">取消</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

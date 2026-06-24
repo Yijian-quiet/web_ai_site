@@ -1,0 +1,54 @@
+{% extends "base_public.html" %}
+{% block title %}工具 - Mr.自由基{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="page-header anim-fade">
+        <h1><i class="bi bi-tools"></i> 开发工具</h1>
+        <div class="accent-line"></div>
+        <p>科研平台 · AI 应用 · API 服务 · 开源项目</p>
+    </div>
+
+    <div class="section">
+        {% for tool in tools %}
+        {% if loop.changed(tool.category) %}
+        {% if not loop.first %}</div>{% endif %}
+        <h2 style="font-size:1.2rem;font-weight:600;margin-bottom:16px;margin-top:32px;color:var(--accent);">
+            <i class="bi bi-folder"></i> {{ tool.category }}
+        </h2>
+        <div class="grid-2">
+        {% endif %}
+            <div class="card-glass anim-fade">
+                <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:8px;">
+                    <div class="card-title">{{ tool.name }}</div>
+                    <span class="status-badge {{ tool.status }}">{{ tool.status }}</span>
+                </div>
+                <div class="card-subtitle" style="font-size:0.8rem;color:var(--text-muted);">{{ tool.year }}</div>
+                <div class="card-text" style="font-size:0.9rem;margin-bottom:8px;">{{ tool.description }}</div>
+                <div class="card-tags">
+                    {% for t in tool.tags %}
+                    <span class="tag tag-purple">{{ t }}</span>
+                    {% endfor %}
+                </div>
+                <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;">
+                    {% if tool.access_url %}
+                    <a href="{{ tool.access_url }}" target="_blank" class="btn btn-primary" style="padding:6px 14px;font-size:0.8rem;">
+                        <i class="bi bi-box-arrow-up-right"></i> 访问
+                    </a>
+                    {% endif %}
+                    {% if tool.links.github %}
+                    <a href="{{ tool.links.github }}" target="_blank" class="btn btn-secondary" style="padding:6px 14px;font-size:0.8rem;">
+                        <i class="bi bi-github"></i> GitHub
+                    </a>
+                    {% endif %}
+                    {% if tool.links.docs %}
+                    <a href="{{ tool.links.docs }}" class="btn btn-secondary" style="padding:6px 14px;font-size:0.8rem;">
+                        <i class="bi bi-file-text"></i> 文档
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        {% if loop.last %}</div>{% endif %}
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

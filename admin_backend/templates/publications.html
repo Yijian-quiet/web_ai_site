@@ -1,0 +1,51 @@
+{% extends "base_public.html" %}
+{% block title %}发表 - Mr.自由基{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="page-header anim-fade">
+        <h1><i class="bi bi-file-earmark-text"></i> 发表与报道</h1>
+        <div class="accent-line"></div>
+        <p>论文 · 项目 · 博客</p>
+    </div>
+
+    <div class="section">
+        {% for pub in publications %}
+        <div class="card-glass anim-fade-d{{ loop.index if loop.index <= 3 else 3 }}" style="margin-bottom:16px;">
+            <div style="display:flex;justify-content:space-between;align-items:start;gap:12px;">
+                <div style="flex:1;">
+                    <div class="card-title" style="font-size:1.05rem;">{{ pub.title }}</div>
+                    <div style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:8px;">
+                        <span class="status-badge {{ pub.type }}" style="margin-right:8px;">
+                            {% if pub.type == preprint %}预印本{% elif pub.type == blog %}博客{% else %}{{ pub.type }}{% endif %}
+                        </span>
+                        {% if pub.venue %}{{ pub.venue }}, {% endif %}{{ pub.year }}
+                    </div>
+                    {% if pub.description %}
+                    <div class="card-text" style="font-size:0.9rem;">{{ pub.description }}</div>
+                    {% endif %}
+                    <div class="card-tags">
+                        {% for t in pub.tags %}
+                        <span class="tag tag-purple">{{ t }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:6px;flex-shrink:0;">
+                    {% if pub.links.doi %}
+                    <a href="{{ pub.links.doi }}" target="_blank" class="btn btn-primary" style="padding:6px 12px;font-size:0.8rem;"><i class="bi bi-link-45deg"></i> DOI</a>
+                    {% endif %}
+                    {% if pub.links.pdf %}
+                    <a href="{{ pub.links.pdf }}" target="_blank" class="btn btn-primary" style="padding:6px 12px;font-size:0.8rem;"><i class="bi bi-file-pdf"></i> PDF</a>
+                    {% endif %}
+                    {% if pub.links.url %}
+                    <a href="{{ pub.links.url }}" target="_blank" class="btn btn-secondary" style="padding:6px 12px;font-size:0.8rem;"><i class="bi bi-link-45deg"></i> 阅读</a>
+                    {% endif %}
+                    {% if pub.links.github %}
+                    <a href="{{ pub.links.github }}" target="_blank" class="btn btn-secondary" style="padding:6px 12px;font-size:0.8rem;"><i class="bi bi-github"></i> GitHub</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

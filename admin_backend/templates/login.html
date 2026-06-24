@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>管理后台登录</title>
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background: linear-gradient(135deg, #1a1d23 0%, #2d323c 100%); min-height: 100vh; display: flex; align-items: center; }
+        .card { border: none; border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,.3); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body p-4">
+                        <h4 class="text-center mb-4"><i class="bi bi-shield-lock"></i> 管理后台</h4>
+                        {% if error %}
+                        <div class="alert alert-danger py-2 small">{{ error }}</div>
+                        {% endif %}
+                        <form method="post">
+                            <div class="mb-3">
+                                <label class="form-label small">用户名</label>
+                                <input type="text" name="username" class="form-control" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label small">密码</label>
+                                <input type="password" name="password" class="form-control" required>
+                            </div>
+                            <button type="submit" class="btn btn-dark w-100">登录</button>
+                        <div class="text-center mt-2"><a href="/forgot-password" class="text-decoration-none small" style="color:#6C63FF;">忘记密码？</a></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

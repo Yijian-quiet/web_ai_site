@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}聊天记录{% endblock %}
+{% block content %}
+<h4 class="mb-4"><i class="bi bi-chat-dots"></i> 聊天记录查询</h4>
+
+<div class="card stat-card mb-4">
+    <div class="card-body">
+        <form class="row g-2 align-items-end" method="get">
+            <div class="col-auto">
+                <label class="form-label small">选择用户</label>
+                <select name="user_id" class="form-select">
+                    <option value="">-- 请选择 --</option>
+                    {% for u in users %}
+                    <option value="{{ u.id }}" {% if selected_user == u.id|string %}selected{% endif %}>{{ u.username }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-auto">
+                <label class="form-label small">显示条数</label>
+                <select name="limit" class="form-select">
+                    <option value="20">20</option>
+                    <option value="50" selected>50</option>
+                    <option value="100">100</option>
+                    <option value="200">200</option>
+                </select>
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-dark"><i class="bi bi-search"></i> 查询</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% if messages %}
+<div class="card stat-card">
+    <div class="card-body p-0">
+        <div class="p-3 text-secondary small border-bottom">共 {{ messages|length }} 条记录</div>
+        <div style="max-height:600px;overflow-y:auto;">
+            {% for m in messages %}
+            <div class="border-bottom p-3 {% if m.role == 'assistant' %}bg-light{% endif %}">
+                <div class="d-flex align-items-center mb-1">
+                    <span class="badge {% if m.role == 'user' %}bg-primary{% else %}bg-success{% endif %} me-2">
+                        {% if m.role == 'user' %}用户{% else %}AI{% endif %}
+                    </span>
+                    <span class="small text-secondary">{{ m.timestamp }}</span>
+                    {% if m.rating %}
+                    <span class="ms-2">{{ {1:"👎",2:"👌",3:"👍"}.get(m.rating, "") }}</span>
+                    {% endif %}
+                </div>
+                <div class="small">{{ m.content[:200] }}{% if m.content|length > 200 %}...{% endif %}</div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% elif selected_user %}
+<div class="alert alert-info">该用户暂无聊天记录</div>
+{% endif %}
+{% endblock %}

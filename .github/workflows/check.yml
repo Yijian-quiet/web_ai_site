@@ -1,0 +1,43 @@
+name: CI Check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      
+      - name: Check Python syntax
+        run: |
+          python3 -m py_compile yijian_AI/config.py
+          python3 -m py_compile yijian_AI/models/user.py
+          python3 -m py_compile yijian_AI/models/chat.py
+          python3 -m py_compile yijian_AI/models/admin.py
+          python3 -m py_compile yijian_AI/services/deepseek_service.py
+          python3 -m py_compile yijian_AI/services/email_service.py
+          python3 -m py_compile yijian_AI/utils/db.py
+          python3 -m py_compile admin_backend/app.py
+          echo "✅ 所有 Python 文件语法检查通过"
+      
+      - name: Basic structure check
+        run: |
+          test -f docker-compose.yml && echo "✅ docker-compose.yml 存在"
+          test -d yijian_AI && echo "✅ yijian_AI/ 存在"
+          test -d admin_backend/templates && echo "✅ templates/ 存在"
+          test -f yijian_AI/app_qwen.py && echo "✅ app_qwen.py 存在"
+      
+      - name: Notify on failure
+        if: failure()
+        run: |
+          echo "❌ CI 检查失败！请检查提交的代码。"
+          exit 1

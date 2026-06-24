@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}管理后台{% endblock %} | 不颓废的小健</title>
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcdn.net/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>
+        body { background: #f5f7fb; }
+        .sidebar { min-height: 100vh; background: #1a1d23; }
+        .sidebar .nav-link { color: #8892a4; padding: 12px 20px; border-radius: 8px; margin: 2px 8px; }
+        .sidebar .nav-link:hover, .sidebar .nav-link.active { color: #fff; background: #2d323c; }
+        .sidebar .nav-link i { margin-right: 10px; }
+        .stat-card { border: none; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,.04); }
+        .stat-card .icon { font-size: 2rem; opacity: .2; position: absolute; right: 20px; bottom: 20px; }
+        .stat-card .card-body { position: relative; }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- 侧边栏 -->
+            <div class="col-2 sidebar p-3">
+                <h5 class="text-white mb-4 px-3"><i class="bi bi-gear-fill"></i> 管理后台</h5>
+                <nav class="nav flex-column">
+                    <a class="nav-link {% if request.path == '/admin' %}active{% endif %}" href="/admin">
+                        <i class="bi bi-speedometer2"></i> 总览
+                    </a>
+                    <a class="nav-link {% if '/users' in request.path %}active{% endif %}" href="/admin/users">
+                        <i class="bi bi-people"></i> 用户管理
+                    </a>
+                    <a class="nav-link {% if '/chats' in request.path %}active{% endif %}" href="/admin/chats">
+                        <i class="bi bi-chat-dots"></i> 聊天记录
+                    </a>
+                    <a class="nav-link {% if '/posts' in request.path %}active{% endif %}" href="/admin/posts">
+                        <i class="bi bi-file-text"></i> 文章管理
+                    </a>
+                    <hr class="text-secondary">
+                    <a class="nav-link" href="http://119.45.174.234" target="_blank">
+                        <i class="bi bi-house"></i> 返回网站
+                    </a>
+                    <a class="nav-link" href="/admin/logout">
+                        <i class="bi bi-box-arrow-right"></i> 退出
+                    </a>
+                </nav>
+                <div class="mt-auto text-secondary small px-3" style="position:absolute;bottom:20px;">
+                    <i class="bi bi-person-circle"></i> {{ session.admin_user }}
+                </div>
+            </div>
+
+            <!-- 主内容 -->
+            <div class="col-10 p-4">
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,59 @@
+version: "3.8"
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: web_ai_mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: "***"
+      MYSQL_DATABASE: web_ai
+      MYSQL_USER: webai
+      MYSQL_PASSWORD: "***"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - /root/web_ai_docker.sql:/docker-entrypoint-initdb.d/01-init.sql:ro
+    ports:
+      - "127.0.0.1:3307:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-u", "root", "-p***"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  streamlit:
+    build:
+      context: /root/web_ai/yijian_AI
+      dockerfile: Dockerfile
+    container_name: web_ai_streamlit
+    restart: always
+    depends_on:
+      mysql:
+        condition: service_healthy
+    env_file:
+      - /root/web_ai/yijian_AI/.env
+    environment:
+      - MYSQL_HOST=mysql
+    ports:
+      - "127.0.0.1:8501:8501"
+
+  flask-admin:
+    build:
+      context: /root/web_ai/admin_backend
+      dockerfile: Dockerfile
+    container_name: web_ai_flask
+    restart: always
+    depends_on:
+      mysql:
+        condition: service_healthy
+    env_file:
+      - /root/web_ai/yijian_AI/.env
+    environment:
+      - MYSQL_HOST=mysql
+    ports:
+      - "127.0.0.1:5000:5000"
+    volumes:
+      - /root/web_ai/admin_backend/data:/app/data
+
+volumes:
+  mysql_data:

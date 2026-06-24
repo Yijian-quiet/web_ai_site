@@ -1,0 +1,70 @@
+{% extends "base_public.html" %}
+{% block title %}关于 - Mr.自由基{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="page-header anim-fade">
+        <h1><i class="bi bi-person"></i> 关于我</h1>
+        <div class="accent-line"></div>
+        <p>{{ profile.subtitle }} · {{ profile.location }}</p>
+    </div>
+
+    <div class="section">
+        <div class="card-glass anim-fade-d1" style="padding:32px;margin-bottom:40px;">
+            <div style="display:flex;gap:24px;flex-wrap:wrap;">
+                <div style="flex:1;min-width:200px;">
+                    {% if profile.avatar %}
+                    <img src="{{ profile.avatar }}" alt="avatar" style="width:120px;height:120px;border-radius:50%;border:2px solid var(--accent);object-fit:cover;">
+                    {% else %}
+                    <div style="width:120px;height:120px;border-radius:50%;border:2px solid var(--accent-dim);display:flex;align-items:center;justify-content:center;font-size:3rem;background:var(--gradient-card);">
+                        <span style="background:var(--gradient-accent);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">{{ profile.name[0] }}</span>
+                    </div>
+                    {% endif %}
+                </div>
+                <div style="flex:3;">
+                    <h2 style="font-size:1.8rem;font-weight:700;margin-bottom:4px;">{{ profile.name }}</h2>
+                    <p style="color:var(--accent);margin-bottom:12px;"><i class="bi bi-geo-alt"></i> {{ profile.location }} · <i class="bi bi-envelope"></i> {{ profile.email }}</p>
+                    <p style="color:var(--text-secondary);line-height:1.8;">{{ profile.bio }}</p>
+                    <div style="margin-top:16px;display:flex;gap:8px;">
+                        <a href="https://github.com/Yijian-quiet" target="_blank" class="btn btn-secondary" style="padding:8px 16px;font-size:0.85rem;"><i class="bi bi-github"></i> GitHub</a>
+                        <a href="/blog" class="btn btn-secondary" style="padding:8px 16px;font-size:0.85rem;"><i class="bi bi-pencil"></i> 博客</a>
+                        <a href="/chat" class="btn btn-secondary" style="padding:8px 16px;font-size:0.85rem;"><i class="bi bi-chat-dots"></i> AI 对话</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== 教育经历 ===== -->
+        {% if profile.education %}
+        <h2 style="font-size:1.5rem;font-weight:600;margin-bottom:24px;display:flex;align-items:center;gap:8px;">
+            <i class="bi bi-mortarboard" style="color:var(--accent);"></i> 教育
+        </h2>
+        <div class="timeline anim-fade-d1">
+            {% for edu in profile.education %}
+            <div class="timeline-item">
+                <div class="period">{{ edu.period }}</div>
+                <div class="item-title">{{ edu.school }}</div>
+                <div class="item-org">{{ edu.major }}</div>
+                {% if edu.note %}
+                <div class="item-desc">{{ edu.note }}</div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <h2 style="font-size:1.5rem;font-weight:600;margin:36px 0 24px;display:flex;align-items:center;gap:8px;">
+            <i class="bi bi-clock-history" style="color:var(--accent);"></i> 经历
+        </h2>
+        <div class="timeline anim-fade-d2">
+            {% for item in timeline %}
+            <div class="timeline-item">
+                <div class="period">{{ item.period }}</div>
+                <div class="item-title">{{ item.title }}</div>
+                <div class="item-org">{{ item.org }}</div>
+                <div class="item-desc">{{ item.description }}</div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

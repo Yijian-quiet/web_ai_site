@@ -1,0 +1,107 @@
+[
+  {
+    "id": "chemmix",
+    "name": "ChemMixPlanner",
+    "description": "双算法统一逆合成规划平台。集成 9 个单步模型（RxNGormer/GraphFP/ChemBart等）+ 双搜索算法（MCTS_STAR/Retro*），支持酶催化反应预测。Docker 容器化部署。",
+    "category": "逆合成平台",
+    "status": "deployed",
+    "access_url": "http://114.212.160.159:8001/retroplanner/",
+    "tags": [
+      "逆合成",
+      "Docker",
+      "Flask",
+      "MCTS",
+      "Retro*"
+    ],
+    "year": 2026,
+    "links": {
+      "github": "https://github.com/Yijian-quiet/DongLab",
+      "docs": "/tools"
+    }
+  },
+  {
+    "id": "retro-api",
+    "name": "Gu12 逆合成预测 API",
+    "description": "基于 ChemBart FULL_4 的单步逆合成预测服务，GPU 加速（RTX 4090 D），支持批量预测。FastAPI 接口。",
+    "category": "逆合成 API",
+    "status": "deployed",
+    "tags": [
+      "逆合成",
+      "GPU",
+      "FastAPI",
+      "ChemBart"
+    ],
+    "year": 2026,
+    "links": {}
+  },
+  {
+    "id": "web-ai",
+    "name": "不颓废的小健 · AI 分身",
+    "description": "个人 AI 网站：Streamlit 聊天（DeepSeek 驱动）+ Flask 博客/管理后台 + BGE 语义 RAG 检索。支持邮箱注册和密码找回。",
+    "category": "AI 应用",
+    "status": "deployed",
+    "access_url": "http://119.45.174.234/",
+    "tags": [
+      "DeepSeek",
+      "RAG",
+      "Streamlit",
+      "Flask"
+    ],
+    "year": 2026,
+    "links": {
+      "github": "https://github.com/Yijian-quiet/DongLab"
+    }
+  },
+  {
+    "id": "multimodal-tool",
+    "name": "Multi-modal ChemModel",
+    "description": "多模态化学逆合成模型（江苏省创新项目）。改造 LLaVA 多模态模型适配分子光谱数据，实现光谱→分子结构识别。数据集和代码已开源。",
+    "category": "科研开源",
+    "status": "active",
+    "tags": [
+      "多模态",
+      "LLaVA",
+      "光谱",
+      "PyTorch"
+    ],
+    "year": 2025,
+    "links": {
+      "github": "https://github.com/Yijian-quiet/Multi-modal-ChemModel"
+    }
+  },
+  {
+    "id": "donglab-docs",
+    "name": "DongLab 课题组文档",
+    "description": "课题组服务器使用指南、逆合成 API 文档（9 模型全覆盖）、监控面板、集群操作手册。",
+    "category": "文档",
+    "status": "deployed",
+    "tags": [
+      "文档",
+      "API",
+      "课题组"
+    ],
+    "year": 2026,
+    "links": {
+      "github": "https://github.com/Yijian-quiet/DongLab"
+    }
+  },
+  {
+    "id": "retrosynthesis-skill",
+    "name": "DongLab 逆合成 AI Skill",
+    "description": "为 AI Agent 提供逆合成规划能力的 Skill 文档。涵盖 9 个单步模型（RxNGormer/GraphFP/ChemBart等）的 API 调用、双算法多步搜索（MCTS_STAR/Retro*）、反应条件预测、酶催化分析，附完整调用示例。",
+    "category": "逆合成 API",
+    "status": "deployed",
+    "tags": [
+      "逆合成",
+      "AI Agent",
+      "API",
+      "OpenClaw Skill",
+      "AI4S"
+    ],
+    "year": 2026,
+    "links": {
+      "github": "https://github.com/Yijian-quiet/DongLab",
+      "docs": "/tools"
+    }
+  }
+]
