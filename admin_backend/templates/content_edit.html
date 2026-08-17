@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}{{ '编辑' if item_id else '新建' }}{{ schema.label }}{% endblock %}
+{% block content %}
+<h4 class="mb-4">
+    <i class="bi {{ schema.icon }}"></i> {{ '编辑' if item_id else '新建' }}{{ schema.label }}
+</h4>
+
+<form method="POST" action="{{ url_for('content_mgr.content_save', key=key) }}">
+    <input type="hidden" name="item_id" value="{{ item_id }}">
+
+    <div class="card stat-card mb-4">
+        <div class="card-body">
+            {% for f in schema.fields %}
+            <div class="mb-3">
+                <label class="form-label">
+                    {{ f.label }}{% if f.required %} <span class="text-danger">*</span>{% endif %}
+                </label>
+                {% if f.type == 'text' %}
+                <input type="text" class="form-control" name="{{ f.key }}"
+                       value="{{ (item.get(f.key, '') if item else '') }}"
+                       {% if f.required %}required{% endif %}>
+
+                {% elif f.type == 'number' %}
+                <input type="number" class="form-control" name="{{ f.key }}"
+                       value="{{ (item.get(f.key, '') if item else '') }}">
+
+                {% elif f.type == 'select' %}
+                <select class="form-select" name="{{ f.key }}">
+                    <option value="">— 请选择 —</option>
+                    {% for val, label in f.options %}
+                    <option value="{{ val }}" {% if item and item.get(f.key) == val %}selected{% endif %}>{{ label }}</option>
+                    {% endfor %}
+                </select>
+
+                {% elif f.type == 'textarea' %}
+                <textarea class="form-control" name="{{ f.key }}" rows="4"
+                          {% if f.required %}required{% endif %}>{{ (item.get(f.key, '') if item else '') }}</textarea>
+
+                {% elif f.type == 'list' %}
+                <textarea class="form-control" name="{{ f.key }}" rows="4"
+                          placeholder="每行一项,自动转成列表">{{ (item.get(f.key, []) if item else []) | join('\n') }}</textarea>
+
+                {% elif f.type == 'links' %}
+                <textarea class="form-control" name="{{ f.key }}" rows="3"
+                          placeholder="名称: URL&#10;如:&#10;arxiv: https://arxiv.org/abs/xxx&#10;github: https://github.com/xxx">{{ (item.get(f.key, {}) if item else {}) | dict_to_lines }}</textarea>
+                {% endif %}
+                {% if f.help %}
+                <div class="form-text">{{ f.help }}</div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-primary"><i class="bi bi-check-lg"></i> 保存</button>
+        <a href="{{ url_for('content_mgr.content_list', key=key) }}" class="btn btn-outline-secondary">取消</a>
+    </div>
+</form>
+{% endblock %}

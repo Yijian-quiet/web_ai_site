@@ -11,6 +11,10 @@ from pymysql.cursors import DictCursor
 app = Flask(__name__)
 app.secret_key = os.urandom(24).hex()
 
+# ====== 内容管理模块 (蓝图) ======
+from content_mgr import content_mgr_bp
+app.register_blueprint(content_mgr_bp)
+
 MYSQL = {
     "host": os.getenv("MYSQL_HOST", "localhost"), "user": "webai",
     "password": os.getenv("MYSQL_PASSWORD", "test123"),
@@ -224,7 +228,7 @@ def tools():
 
 @app.route("/chat")
 def chat_redirect():
-    return redirect("http://your-domain.com")
+    return redirect("https://zyouji.com.cn")
 
 
 # ====== 公开博客 ======
@@ -360,7 +364,7 @@ def mobile_new_session_api():
 
 # ====== 邮箱验证 & 密码重置 ======
 import os, sys
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'personality_AI'))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'yijian_AI'))
 from models.user import verify_email_token, reset_password, send_password_reset
 from datetime import datetime
 

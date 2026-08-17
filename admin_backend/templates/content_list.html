@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block title %}{{ schema.label }}管理{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h4 class="mb-0"><i class="bi {{ schema.icon }}"></i> {{ schema.label }}管理</h4>
+    <a href="{{ url_for('content_mgr.content_new', key=key) }}" class="btn btn-primary btn-sm">
+        <i class="bi bi-plus-lg"></i> 新建{{ schema.label }}
+    </a>
+</div>
+
+{% if not items %}
+<div class="card stat-card">
+    <div class="card-body text-center text-secondary py-5">
+        <i class="bi bi-inbox" style="font-size:2.5rem"></i>
+        <p class="mt-2 mb-0">暂无{{ schema.label }}内容,点击右上角新建</p>
+    </div>
+</div>
+{% else %}
+<div class="card stat-card">
+    <div class="card-body p-0">
+        <table class="table table-hover align-middle mb-0">
+            <thead class="table-light">
+                <tr>
+                    <th style="width:60px">#</th>
+                    <th>{{ schema.label }}名称</th>
+                    <th>摘要</th>
+                    <th style="width:170px" class="text-end">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in items %}
+                <tr>
+                    <td class="text-secondary">{{ loop.index }}</td>
+                    <td>
+                        <strong>{{ item.get(title_field, item.get('id', '')) }}</strong>
+                        {% if item.get('status') %}
+                        <span class="badge bg-secondary ms-1">{{ item.status }}</span>
+                        {% endif %}
+                        <div class="text-secondary small">{{ item.get('id', '') }}</div>
+                    </td>
+                    <td class="text-secondary small" style="max-width:420px">
+                        <div class="text-truncate">{{ item.get('description', '') or item.get('venue', '') or item.get('org', '') }}</div>
+                    </td>
+                    <td class="text-end">
+                        {% if item.get('id') %}
+                        <a href="{{ url_for('content_mgr.content_edit', key=key, item_id=item.id) }}"
+                           class="btn btn-outline-primary btn-sm">
+                            <i class="bi bi-pencil"></i> 编辑
+                        </a>
+                        <form method="POST" action="{{ url_for('content_mgr.content_delete', key=key, item_id=item.id) }}"
+                              style="display:inline" onsubmit="return confirm('确定删除「{{ item.get(title_field, item.id) }}」?此操作不可恢复');">
+                            <button type="submit" class="btn btn-outline-danger btn-sm">
+                                <i class="bi bi-trash"></i> 删除
+                            </button>
+                        </form>
+                        {% else %}
+                        <span class="text-danger small">缺少 id,无法操作</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endif %}
+<div class="mt-3">
+    <a href="/admin" class="btn btn-outline-secondary btn-sm"><i class="bi bi-arrow-left"></i> 返回总览</a>
+</div>
+{% endblock %}

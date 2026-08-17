@@ -33,27 +33,9 @@
             </div>
         </div>
 
-        <!-- ===== 教育经历 ===== -->
-        {% if profile.education %}
-        <h2 style="font-size:1.5rem;font-weight:600;margin-bottom:24px;display:flex;align-items:center;gap:8px;">
-            <i class="bi bi-mortarboard" style="color:var(--accent);"></i> 教育
-        </h2>
-        <div class="timeline anim-fade-d1">
-            {% for edu in profile.education %}
-            <div class="timeline-item">
-                <div class="period">{{ edu.period }}</div>
-                <div class="item-title">{{ edu.school }}</div>
-                <div class="item-org">{{ edu.major }}</div>
-                {% if edu.note %}
-                <div class="item-desc">{{ edu.note }}</div>
-                {% endif %}
-            </div>
-            {% endfor %}
-        </div>
-        {% endif %}
-
+        <!-- ===== 教育 & 经历(统一时间线,教育 + 里程碑) ===== -->
         <h2 style="font-size:1.5rem;font-weight:600;margin:36px 0 24px;display:flex;align-items:center;gap:8px;">
-            <i class="bi bi-clock-history" style="color:var(--accent);"></i> 经历
+            <i class="bi bi-clock-history" style="color:var(--accent);"></i> 教育 & 经历
         </h2>
         <div class="timeline anim-fade-d2">
             {% for item in timeline %}

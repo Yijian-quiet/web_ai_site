@@ -37,7 +37,24 @@
                         <i class="bi bi-file-text"></i> 文章管理
                     </a>
                     <hr class="text-secondary">
-                    <a class="nav-link" href="http://your-domain.com" target="_blank">
+                    <div class="text-secondary small px-3 mb-1">📝 内容管理</div>
+                    <a class="nav-link {% if request.path == '/admin/content/profile' %}active{% endif %}" href="/admin/content/profile">
+                        <i class="bi bi-person-badge"></i> 个人信息
+                    </a>
+                    <a class="nav-link {% if '/content/projects' in request.path %}active{% endif %}" href="/admin/content/projects">
+                        <i class="bi bi-kanban"></i> 项目管理
+                    </a>
+                    <a class="nav-link {% if '/content/publications' in request.path %}active{% endif %}" href="/admin/content/publications">
+                        <i class="bi bi-journal-richtext"></i> 发表管理
+                    </a>
+                    <a class="nav-link {% if '/content/tools' in request.path %}active{% endif %}" href="/admin/content/tools">
+                        <i class="bi bi-tools"></i> 工具管理
+                    </a>
+                    <a class="nav-link {% if '/content/timeline' in request.path %}active{% endif %}" href="/admin/content/timeline">
+                        <i class="bi bi-clock-history"></i> 时间线
+                    </a>
+                    <hr class="text-secondary">
+                    <a class="nav-link" href="https://zyouji.com.cn" target="_blank">
                         <i class="bi bi-house"></i> 返回网站
                     </a>
                     <a class="nav-link" href="/admin/logout">
