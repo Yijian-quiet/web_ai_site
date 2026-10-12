@@ -72,5 +72,25 @@
       "github": "https://github.com/Yijian-quiet/DongLab",
       "docs": "/tools"
     }
+  },
+  {
+    "id": "dsh-mol",
+    "name": "dsh-mol · 化学工作台",
+    "description": "为 AI Agent 打造的本地优先化学工作台（DeepSeek Harness 插件）。聊天框旁一个 Ketcher 画板 → 画完即插进对话；本机 RDKit 即时算分子式/分子量/logP/TPSA/类药性(Lipinski·Veber·QED·PAINS)/标准化/批量清洗。零网络、零 API key、零外部服务；同一套核心兼作 stdio MCP 服务，可被 Claude Code / Codex 直接调用。MIT 开源，已发布 PyPI（pip install 'dsh-mol[mcp]'）。",
+    "category": "dsh 插件",
+    "status": "active",
+    "access_url": "https://pypi.org/project/dsh-mol/",
+    "tags": [
+      "dsh",
+      "RDKit",
+      "MCP",
+      "化学",
+      "AI4S",
+      "开源"
+    ],
+    "year": 2026,
+    "links": {
+      "github": "https://github.com/Yijian-quiet/dsh-mol"
+    }
   }
 ]
