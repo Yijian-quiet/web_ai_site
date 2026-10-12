@@ -15,6 +15,26 @@
     <span>教育经历已合并至「<a href="/admin/content/timeline" class="alert-link">时间线</a>」管理,请到时间线中编辑</span>
 </div>
 
+<div class="card stat-card mb-4">
+    <div class="card-header bg-white"><i class="bi bi-image"></i> 头像照片</div>
+    <div class="card-body d-flex align-items-center gap-4 flex-wrap">
+        <div>
+            {% if profile.get('avatar') %}
+            <img src="{{ profile.get('avatar') }}" alt="avatar" style="width:96px;height:96px;border-radius:50%;object-fit:cover;border:2px solid #dee2e6;">
+            {% else %}
+            <div style="width:96px;height:96px;border-radius:50%;background:#eef1f6;display:flex;align-items:center;justify-content:center;color:#9aa4b2;font-size:2rem;">
+                <i class="bi bi-person"></i>
+            </div>
+            {% endif %}
+        </div>
+        <form method="POST" action="/admin/content/profile/avatar" enctype="multipart/form-data" class="d-flex align-items-center gap-2 flex-wrap">
+            <input type="file" name="avatar" accept="image/*" class="form-control" style="max-width:320px;" required>
+            <button type="submit" class="btn btn-primary"><i class="bi bi-upload"></i> 上传头像</button>
+            <span class="text-secondary small">支持 png/jpg/gif/webp/svg；上传后自动替换旧图，显示在「关于」页</span>
+        </form>
+    </div>
+</div>
+
 <form method="POST">
     <div class="card stat-card mb-4">
         <div class="card-header bg-white"><i class="bi bi-person"></i> 基本信息</div>

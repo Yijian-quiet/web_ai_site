@@ -3,9 +3,9 @@
 {% block content %}
 <div class="container">
     <div class="page-header anim-fade">
-        <h1><i class="bi bi-file-earmark-text"></i> 发表与报道</h1>
+        <h1><i class="bi bi-file-earmark-text"></i> {{ site.get('page_publications_title', '发表与报道') }}</h1>
         <div class="accent-line"></div>
-        <p>论文 · 项目 · 博客</p>
+        <p>{{ site.get('page_publications_subtitle', '论文 · 项目 · 博客') }}</p>
     </div>
 
     <div class="section">

@@ -3,9 +3,9 @@
 {% block content %}
 <div class="container">
     <div class="page-header anim-fade">
-        <h1><i class="bi bi-journal-code"></i> 科研项目</h1>
+        <h1><i class="bi bi-journal-code"></i> {{ site.get('page_projects_title', '科研项目') }}</h1>
         <div class="accent-line"></div>
-        <p>正在进行的和已完成的研究项目</p>
+        <p>{{ site.get('page_projects_subtitle', '正在进行的和已完成的研究项目') }}</p>
     </div>
 
     <div class="section grid-2">

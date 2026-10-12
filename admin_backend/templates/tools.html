@@ -3,26 +3,25 @@
 {% block content %}
 <div class="container">
     <div class="page-header anim-fade">
-        <h1><i class="bi bi-tools"></i> 开发工具</h1>
+        <h1><i class="bi bi-tools"></i> {{ site.get('page_tools_title', '开发工具') }}</h1>
         <div class="accent-line"></div>
-        <p>科研平台 · AI 应用 · API 服务 · 开源项目</p>
+        <p>{{ site.get('page_tools_subtitle', '科研平台 · AI 应用 · API 服务 · 开源项目') }}</p>
     </div>
 
     <div class="section">
-        {% for tool in tools %}
-        {% if loop.changed(tool.category) %}
-        {% if not loop.first %}</div>{% endif %}
-        <h2 style="font-size:1.2rem;font-weight:600;margin-bottom:16px;margin-top:32px;color:var(--accent);">
-            <i class="bi bi-folder"></i> {{ tool.category }}
-        </h2>
         <div class="grid-2">
-        {% endif %}
+        {% for tool in tools %}
             <div class="card-glass anim-fade">
                 <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:8px;">
                     <div class="card-title">{{ tool.name }}</div>
                     <span class="status-badge {{ tool.status }}">{{ tool.status }}</span>
                 </div>
-                <div class="card-subtitle" style="font-size:0.8rem;color:var(--text-muted);">{{ tool.year }}</div>
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+                    <span style="font-size:0.75rem;color:var(--text-muted);">{{ tool.year }}</span>
+                    {% if tool.category %}
+                    <span style="font-size:0.7rem;padding:2px 8px;border-radius:4px;background:var(--accent-dim);color:var(--accent);">{{ tool.category }}</span>
+                    {% endif %}
+                </div>
                 <div class="card-text" style="font-size:0.9rem;margin-bottom:8px;">{{ tool.description }}</div>
                 <div class="card-tags">
                     {% for t in tool.tags %}
@@ -47,8 +46,8 @@
                     {% endif %}
                 </div>
             </div>
-        {% if loop.last %}</div>{% endif %}
         {% endfor %}
+        </div>
     </div>
 </div>
 {% endblock %}

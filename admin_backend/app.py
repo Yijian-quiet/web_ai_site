@@ -200,6 +200,15 @@ def _load_json(filename):
     except:
         return []
 
+
+@app.context_processor
+def _inject_site():
+    """所有公开模板都能用 site.* 读取站点设置(缺文件时为空 dict,模板有默认值)"""
+    site = _load_json("site.json")
+    if not isinstance(site, dict):
+        site = {}
+    return {"site": site}
+
 @app.route("/")
 def home():
     profile = _load_json("profile.json")

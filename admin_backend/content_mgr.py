@@ -12,7 +12,7 @@ import re
 from functools import wraps
 
 from flask import (Blueprint, jsonify, redirect, render_template,
-                   request, session, url_for)
+                   request, send_from_directory, session, url_for)
 
 content_mgr_bp = Blueprint("content_mgr", __name__)
 
@@ -292,7 +292,9 @@ def content_profile():
     profile = _load_profile()
     if request.method == "POST":
         form = request.form
-        profile = {
+        # 以现有数据为基底:保留 avatar 等本表单未覆盖的字段
+        base = dict(profile) if isinstance(profile, dict) else {}
+        base.update({
             "name": form.get("name", "").strip(),
             "alias": form.get("alias", "").strip(),
             "title": form.get("title", "").strip(),
@@ -304,7 +306,8 @@ def content_profile():
                 "github": form.get("social_github", "").strip(),
                 "blog": form.get("social_blog", "").strip(),
             },
-        }
+        })
+        profile = base
         # highlights 动态行 (icon | label | value)
         hl = []
         icons = form.getlist("hl_icon")
@@ -327,3 +330,116 @@ def content_profile():
         return redirect(url_for("content_mgr.content_profile", saved=1))
     saved = request.args.get("saved", "")
     return render_template("content_profile.html", profile=profile, saved=saved)
+
+
+# =====================================================================
+# 站点设置 (site.json · 导航/页脚/各页文案) + 头像上传
+# 2026-10-12 新增: 把模板里写死的文案搬进后台, 支持上传头像
+# =====================================================================
+
+UPLOAD_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "uploads")
+SITE_FILE = "site.json"
+
+SITE_SCHEMA = {
+    "label": "站点设置",
+    "icon": "bi-sliders",
+    "file": SITE_FILE,
+    "groups": [
+        {"title": "品牌 / 导航", "fields": [
+            {"key": "brand_name", "label": "站点品牌名(左上角)", "type": "text"},
+            {"key": "brand_icon", "label": "品牌图标(bi-*, 如 bi-dot)", "type": "text"},
+        ]},
+        {"title": "首页 Hero", "fields": [
+            {"key": "hero_badge_icon", "label": "徽章图标(bi-*)", "type": "text"},
+            {"key": "hero_badge", "label": "徽章文字", "type": "text"},
+        ]},
+        {"title": "页脚 / 备案", "fields": [
+            {"key": "footer_copyright", "label": "版权文字", "type": "text"},
+            {"key": "footer_github", "label": "页脚 GitHub 链接", "type": "text"},
+            {"key": "icp_text", "label": "ICP 备案号文字", "type": "text"},
+            {"key": "icp_url", "label": "ICP 备案链接", "type": "text"},
+            {"key": "police_text", "label": "公安备案文字", "type": "text"},
+            {"key": "police_url", "label": "公安备案链接", "type": "text"},
+        ]},
+        {"title": "各页标题 / 副标题", "fields": [
+            {"key": "page_about_title", "label": "关于 · 标题", "type": "text"},
+            {"key": "page_about_subtitle", "label": "关于 · 副标题(留空=用个人信息)", "type": "text"},
+            {"key": "page_projects_title", "label": "项目 · 标题", "type": "text"},
+            {"key": "page_projects_subtitle", "label": "项目 · 副标题", "type": "text"},
+            {"key": "page_publications_title", "label": "发表 · 标题", "type": "text"},
+            {"key": "page_publications_subtitle", "label": "发表 · 副标题", "type": "text"},
+            {"key": "page_tools_title", "label": "工具 · 标题", "type": "text"},
+            {"key": "page_tools_subtitle", "label": "工具 · 副标题", "type": "text"},
+            {"key": "page_blog_title", "label": "博客 · 标题", "type": "text"},
+            {"key": "page_blog_subtitle", "label": "博客 · 副标题", "type": "text"},
+        ]},
+        {"title": "关于页 · 三个按钮", "fields": [
+            {"key": "about_github", "label": "GitHub 链接", "type": "text"},
+            {"key": "about_blog", "label": "博客链接", "type": "text"},
+            {"key": "about_chat", "label": "AI 对话链接", "type": "text"},
+        ]},
+    ],
+}
+
+
+def _load_site():
+    path = os.path.join(DATA_DIR, SITE_FILE)
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            d = json.load(f)
+        return d if isinstance(d, dict) else {}
+    except Exception:
+        return {}
+
+
+def _save_site(site):
+    path = os.path.join(DATA_DIR, SITE_FILE)
+    tmp = path + ".tmp"
+    with open(tmp, "w", encoding="utf-8") as f:
+        json.dump(site, f, ensure_ascii=False, indent=2)
+    os.replace(tmp, path)
+
+
+@content_mgr_bp.route("/admin/content/site", methods=["GET", "POST"])
+@_admin_required
+def content_site():
+    site = _load_site()
+    if request.method == "POST":
+        form = request.form
+        for g in SITE_SCHEMA["groups"]:
+            for f in g["fields"]:
+                site[f["key"]] = form.get(f["key"], "").strip()
+        _save_site(site)
+        return redirect(url_for("content_mgr.content_site", saved=1))
+    return render_template("content_site.html", schema=SITE_SCHEMA,
+                           site=site, saved=request.args.get("saved", ""))
+
+
+# ====== 头像上传 ======
+ALLOWED_EXT = {".png", ".jpg", ".jpeg", ".gif", ".webp", ".svg"}
+
+
+@content_mgr_bp.route("/admin/content/profile/avatar", methods=["POST"])
+@_admin_required
+def profile_avatar():
+    f = request.files.get("avatar")
+    if not f or not f.filename:
+        return redirect(url_for("content_mgr.content_profile"))
+    ext = os.path.splitext(f.filename)[1].lower()
+    if ext not in ALLOWED_EXT:
+        return "不支持的图片格式(仅 png/jpg/jpeg/gif/webp/svg)", 400
+    os.makedirs(UPLOAD_DIR, exist_ok=True)
+    name = "avatar" + ext
+    f.save(os.path.join(UPLOAD_DIR, name))
+    profile = _load_profile()
+    if not isinstance(profile, dict):
+        profile = {}
+    profile["avatar"] = "/uploads/" + name
+    _save_profile(profile)
+    return redirect(url_for("content_mgr.content_profile", saved=1))
+
+
+@content_mgr_bp.route("/uploads/<path:filename>")
+def uploaded_file(filename):
+    """公开访问上传的图片(不要求登录)"""
+    return send_from_directory(UPLOAD_DIR, filename, max_age=300)

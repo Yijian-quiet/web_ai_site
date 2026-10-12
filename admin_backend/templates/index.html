@@ -3,7 +3,7 @@
 {% block content %}
 <section class="hero">
     <div class="hero-content">
-        <div class="hero-badge anim-fade"><i class="bi bi-robot"></i> AI for Science · 化学信息学</div>
+        <div class="hero-badge anim-fade"><i class="bi {{ site.get('hero_badge_icon', 'bi-robot') }}"></i> {{ site.get('hero_badge', 'AI for Science · 化学信息学') }}</div>
         <h1 class="anim-fade-d1">
             <span class="gradient-text">{{ profile.name }}</span>
         </h1>

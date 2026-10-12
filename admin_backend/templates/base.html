@@ -41,6 +41,9 @@
                     <a class="nav-link {% if request.path == '/admin/content/profile' %}active{% endif %}" href="/admin/content/profile">
                         <i class="bi bi-person-badge"></i> 个人信息
                     </a>
+                    <a class="nav-link {% if '/content/site' in request.path %}active{% endif %}" href="/admin/content/site">
+                        <i class="bi bi-sliders"></i> 站点设置
+                    </a>
                     <a class="nav-link {% if '/content/projects' in request.path %}active{% endif %}" href="/admin/content/projects">
                         <i class="bi bi-kanban"></i> 项目管理
                     </a>
